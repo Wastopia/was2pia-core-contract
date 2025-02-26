@@ -1,7 +1,7 @@
 # Waste-Core-Contract
 
 ## Project Overview
-The Waste-Core-Contract is a smart contract project that implements the ERC20 token standard. It allows for the creation and management of a fungible token on the Ethereum blockchain.
+The Waste-Core-Contract is a smart contract project that implements the ERC20 token standard and ERC721 NFT standard. It allows for the creation and management of fungible tokens and non-fungible tokens on the Core blockchain.
 
 ## Installation Instructions
 1. Clone the repository:
@@ -18,7 +18,7 @@ The Waste-Core-Contract is a smart contract project that implements the ERC20 to
 To interact with the smart contracts, you can use the Hardhat framework.
 
 ## Deployment Instructions
-To deploy to the `core_testnet` network, run:
+To deploy to the `core_testnet` network, ensure that you have the necessary environment variables set up, then run:
 
 ```bash
 npx hardhat compile
