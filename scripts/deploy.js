@@ -1,24 +1,39 @@
-// We require the Hardhat Runtime Environment explicitly here. This is optional
-// but useful for running the script in a standalone fashion through `node <script>`. 
-// 
-// To deploy to the core_testnet network, run:
-// npx hardhat run scripts/deploy.js --network core_testnet
-// You can also run a script with `npx hardhat run <script>`. If you do that, Hardhat
-// will compile your contracts, add the Hardhat Runtime Environment's members to the
-// global scope, and execute the script.
 const hre = require("hardhat");
 
 async function main() {
-  const contract = await hre.ethers.deployContract("NameYourToken", [1234000000000000000000000000n]);
+  try {
+    const [deployer] = await hre.ethers.getSigners();
+    // Deploy ERC20 Token
+    const ERC20Contract = await hre.ethers.getContractFactory("Waste2EarnToken");
+    const erc20 = await ERC20Contract.deploy(123400000000000);
+    await erc20.waitForDeployment();
+    console.log("ERC20 Contract deployed to:", erc20.target);
 
-  await contract.waitForDeployment();
+    // Deploy ERC721 NFT
+    const ERC721Contract = await hre.ethers.getContractFactory("Waste2EarnNFT");
+    const erc721 = await ERC721Contract.deploy(deployer.address);
+    await erc721.waitForDeployment();
+    console.log("ERC721 Contract deployed to:", erc721.target);
 
-  console.log(`Deployed to ${contract.target}`);
+    // Deploy Gold Contract
+    const GoldContract = await hre.ethers.getContractFactory("Gold");
+    const gold = await GoldContract.deploy();
+    await gold.waitForDeployment();
+    console.log("Gold Contract deployed to:", gold.target);
+
+    // Deploy LeaderBoard Contract
+    const LeaderBoardContract = await hre.ethers.getContractFactory("LeaderBoard");
+    const leaderBoard = await LeaderBoardContract.deploy();
+    await leaderBoard.waitForDeployment();
+    console.log("LeaderBoard Contract deployed to:", leaderBoard.target);
+  } catch (error) {
+    console.error("Deployment failed:", error);
+    console.log("Please verify:");
+    console.log("- Contract constructor parameters");
+    console.log("- Network configuration");
+    console.log("- Environment variables");
+    process.exitCode = 1;
+  }
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+main();

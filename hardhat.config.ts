@@ -7,6 +7,13 @@ dotenv.config(); // Load environment variables from .env file
 
 const config: HardhatUserConfig = {
   solidity: "0.8.28",
+  paths: {
+    sources: "./contracts",
+    tests: "./test",
+    cache: "./cache",
+    artifacts: "./artifacts"
+  },
+  sourcePaths: ["./contracts", "./game"],
   networks: {
     core_testnet: {
       url: process.env.API_URL || "http://localhost:8545", // Fallback to localhost if API_URL is not set

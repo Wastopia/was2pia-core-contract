@@ -1,13 +1,15 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-describe("NameYourToken", function () {
+describe("Waste2EarnToken", function () {
   let contract: any;
 
   before(async function () {
-    const ContractFactory = await ethers.getContractFactory("NameYourToken");
+    const ContractFactory = await ethers.getContractFactory("Waste2EarnToken");
     contract = await ContractFactory.deploy(1000000000000000000000n);
-    await contract.deployed();
+    console.log("Contract address:", contract.target);
+    console.log("Deploy transaction hash:", contract.deploymentTransaction().hash);
+    await contract.waitForDeployment();
   });
 
   it("should have the correct initial supply", async function () {
